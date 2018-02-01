@@ -1,0 +1,36 @@
+setTimeout(function () {
+  $('#selfWriting').append("<input type=\"text\" id=\"inp1\">");
+  $('#inp1').on('change', function () {
+    showText("#selfWriting", swTxt, 32, 40, 30);
+    setTimeout(function () {
+      $('#selfWriting').append("<input type=\"text\" id=\"inp2\">");
+      $('#inp2').on('change', function () {
+        showText("#selfWriting", swTxt, 40, 118, 30);
+        setTimeout(function () {
+          $('#selfWriting').append("<input type=\"text\" id=\"inp3\">");
+          $('#inp3').on('change', function () {
+            showText("#selfWriting", swTxt, 118, 161, 30);
+            setTimeout(function(){
+              $('#selfWriting').append("<input type=\"text\" id=\"inp4\">.");
+              $('#inp4').on('change', function(){
+                showText("#selfWriting", swTxt, 161, 196,30);
+                setTimeout(function(){
+                  $('#selfWriting').append("<input type=\"text\" id=\"inp5\">.");
+                },1000);
+              })
+            },1900);
+          });
+        }, 3000);
+      });
+    }, 800);
+  });
+}, 1500);
+
+
+$('#surprise-submit').on('click', function(){
+  $('#alercik').css('top','45%');
+  $('#alercik').css('opacity','1');
+});
+$("#SWform").submit(function(e) {
+  e.preventDefault();
+});
