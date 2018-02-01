@@ -1,0 +1,140 @@
+
+WIDOK :
+                <form name="contactform" method="post" action="javascript:confirm()">
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Imię*:</label>
+                            <input type="text" class="form-control" placeholder="Podaj imię" name="first_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Nazwisko*:</label>
+                            <input type="text" class="form-control" placeholder="Podaj nazwisko" name="last_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Telefon*:</label>
+                            <input type="tel" class="form-control bfh-phone" name="last_name" data-format="+48 ddd-ddd-ddd" id="replyNumber" min="0" placeholder="(+48)" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">E-mail*:</label>
+                            <input type="email" class="form-control" name="email" placeholder="Podaj e-mail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Data odbioru bukietu*:</label>
+                            <input type="datetime-local" name="date" class="form-control" placeholder="Wybierz termin" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Dodatkowe uwagi:</label>
+                            <textarea class="form-control noresize" name="comments" rows="4" id="comment"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Treść bileciku (jeżeli rezygnujesz z bileciku pozostaw puste):</label>
+                            <textarea class="form-control noresize" name="dedication" rows="4" id="comment"></textarea>
+                        </div>
+
+                        <div class="form-group mb-5">
+                            <button   type="submit" class="btn btn-primary ">Zamawiam! <i class="fa fa-check" aria-hidden="true"></i></button>
+
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+            
+            <script type="text/javascript">
+                function confirm(){
+                alert("Formularz został przesłany, dziękujemy!")
+               window.location="<?php echo ROOT_URL; ?>glowna";
+                }
+            </script>
+            
+***********************************************************************************************************************************            
+CONTROLLER:
+
+
+
+
+<?php
+class Zamowienie extends Controller{  ///przy wklejeniu do kreatora zmienic nazwe
+	protected function Index(){
+		$viewmodel = new ZamowienieModel();  ///przy wklejeniu do kreatora zmienic nazwe
+		$this->returnView($viewmodel->Index(), true);
+	}
+
+
+    //check if data exists
+     protected function Check(){ if(!isset($_POST['first_name']) ||
+        !isset($_POST['last_name']) ||
+        !isset($_POST['email']) ||
+        !isset($_POST['telephone']) ||
+        !isset($_POST['dedication']) ||
+        !isset($_POST['comments'])) {
+        failed('Upss.. Wygląda na to, że wystąpił jakis problem z Twoimi danymi. Spróbuj jeszcze raz.');
+  }  
+                              }
+    protected function Set_Values(){
+    $first_name = $_POST['first_name']; // required
+    $last_name = $_POST['last_name']; // required
+    $email = $_POST['email']; // required
+    $telephone = $_POST['telephone']; // required
+    $comments = $_POST['comments']; // not required
+    $dedication = $_POST['dedication']; // not required
+    
+    }
+    
+    protected function Validate(){
+    $error_message = "";
+    $email_should_be='/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/';  // how email adress should be
+    $string_should_be="/^[A-Za-z .'-]+$/"; //string should be
+    $phone_should_be='^(\+48\s+)?\d{3}(\s*|\-)\d{3}(\s*|\-)\d{3}$'; //phone should be, +48 prefix (optional); separating elements with hyphen or spaces
+    
+    
+    if(!preg_match($email_shouldbe,$email)) {
+    $error_message .= 'Wprowadzony adres email nie jest poprawny.<br />';
+  }
+ 
+ 
+  if(!preg_match($string_should_be,$first_name)) {
+    $error_message .= 'Wprowadzone imię nie jest poprawne.<br />';
+  }
+ 
+  if(!preg_match($string_should_be,$last_name)) {
+    $error_message .= 'Wprowadzone nazwisko nie jest poprawny.<br />';
+  }
+    
+ 
+  if(!preg_match($phone_should_be,$popne)) {
+    $error_message .= 'Wprowadzony telefon nie jest poprawny.<br />';
+  } 
+    
+    if(strlen($error_message) > 0) {
+    failed($error_message);
+  }
+    }
+    
+    protected function Send_email(){
+    
+    
+    
+    $email_message = "Imię: ".($first_name)."\n";
+    $email_message .= "Nazwisko: ".($last_name)."\n";
+    $email_message .= "Email: ".($email)."\n";
+    $email_message .= "Data: ".($date)."\n";
+    $email_message .= "Telefon: ".($phone)."\n";
+    $email_message .= "Bilecik: ".($dedication)."\n";
+    $email_message .= "Uwagi: ".($comments)."\n";
+   // $email_message .= "Obraz: <a href=\".$url.\">Zobacz</a>";
+ 
+// create email headers
+$headers = 'OD: '.$email_from."\r\n".
+'Opowiedz: '.$email_from."\r\n" .
+'X-Mailer: PHP/' . phpversion();
+@mail($email_to, $email_subject, $email_message, $headers);  //sending email
+ 
+//Success html
+ 
+        "Dziękujemy za złożenie zamówienia, wkrótce skontaktujemy się z Tobą!";
+ 
+    }
+}
+
