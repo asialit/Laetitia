@@ -1,0 +1,19 @@
+#surprise-page #alercik{
+  width:300px;
+  background-color:#343a40;
+  position:absolute;
+  margin:0 auto;
+  top:25%;
+  left:50%;
+  transform:translateX(-150px) !important;
+  border-radius:5px;
+  box-shadow: 0 0 20px #343a40;
+  opacity:0;
+  transition:all .5s;
+}
+#alercik p{
+  text-align:center;
+  color:floralwhite;
+  font-size:24px;
+  padding: 20px;
+}
