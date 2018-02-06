@@ -1,5 +1,5 @@
 
-WIDOK :
+View:
                 <form name="contactform" method="post" action="javascript:confirm()">
                         <div class="form-group">
                             <label for="formGroupExampleInput">Imię*:</label>
@@ -52,12 +52,10 @@ WIDOK :
 CONTROLLER:
 
 
-
-
 <?php
-class Zamowienie extends Controller{  ///przy wklejeniu do kreatora zmienic nazwe
+class Zamowienie extends Controller{ 
 	protected function Index(){
-		$viewmodel = new ZamowienieModel();  ///przy wklejeniu do kreatora zmienic nazwe
+		$viewmodel = new ZamowienieModel();  
 		$this->returnView($viewmodel->Index(), true);
 	}
 
@@ -125,15 +123,12 @@ class Zamowienie extends Controller{  ///przy wklejeniu do kreatora zmienic nazw
     $email_message .= "Uwagi: ".($comments)."\n";
    // $email_message .= "Obraz: <a href=\".$url.\">Zobacz</a>";
  
-// create email headers
+// create email
 $headers = 'OD: '.$email_from."\r\n".
 'Opowiedz: '.$email_from."\r\n" .
 'X-Mailer: PHP/' . phpversion();
 @mail($email_to, $email_subject, $email_message, $headers);  //sending email
- 
-//Success html
- 
-        "Dziękujemy za złożenie zamówienia, wkrótce skontaktujemy się z Tobą!";
+
  
     }
 }
